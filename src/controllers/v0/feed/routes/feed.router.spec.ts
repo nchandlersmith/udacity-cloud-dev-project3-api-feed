@@ -184,7 +184,7 @@ describe('feed router', () => {
 
       const finalNumberOfItems = await FeedItem.count()
       const itemsWithCaption = await findAllWithCaption(caption)
-      await teardownFeedItem();
+      // await teardownFeedItem();
       expect(result.status).toEqual(201)
       expect(result.data.caption).toEqual(caption)
       expect(result.data.url).toContain('https://udagram-707863247739-dev.s3.amazonaws.com/https%3A//happy.com')
