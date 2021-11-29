@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+  - 14
+services:
+  - docker
+script:
+  - docker --version
+  - docker build -t udagram-api-feed .
+  - docker tag udagram-api-feed nchandlersmith/udagram-api-feed
+after_success:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push nchandlersmith/udagram-api-feed
