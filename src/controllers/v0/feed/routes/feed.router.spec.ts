@@ -2,7 +2,6 @@ import axios from 'axios'
 import {FeedItem} from "../models/FeedItem";
 import {Sequelize} from "sequelize-typescript";
 import {config} from "../../../../config/config";
-import {Op} from "sequelize";
 import {toBeNotEmptyString} from "../../../../test-utils/ExpectExtensions";
 import {testConfig} from "../../../../test-utils/TestConfig";
 
@@ -44,9 +43,7 @@ describe('feed router', () => {
   const teardownFeedItem = async (): Promise<void> => {
     await FeedItem.destroy({
       where: {
-        id: {
-          [Op.gt]: 1
-        }
+        url: 'https://happy.com'
       }
     })
   }
@@ -55,12 +52,12 @@ describe('feed router', () => {
     it('should return all feed items', async () => {
       const result = await axios.get(buildUrl('/'))
       expect(result.status).toEqual(200)
-      expect(result.data.count).toEqual(1)
-      expect(result.data.rows[0].caption).toEqual('Hello')
+      expect(result.data.count).toBeGreaterThan(0)
+      expect(result.data.rows[0].caption).toBeNotEmptyString()
       expect(result.data.rows[0].createdAt).toBeNotEmptyString()
       expect(result.data.rows[0].updatedAt).toBeNotEmptyString()
-      expect(result.data.rows[0].url).toContain('https://udagram-707863247739-dev.s3.amazonaws.com/test.jpg')
-      expect(result.data.rows[0].id).toEqual(1)
+      expect(result.data.rows[0].url).toContain('https://udagram-')
+      expect(result.data.rows[0].id).not.toBeNull()
     })
   })
 
@@ -114,7 +111,7 @@ describe('feed router', () => {
       const headers = {authorization: `Bearer ${testConfig.token}`}
       const result = await axios.get(buildUrl('/signed-url/test.jpg'), {headers})
       expect(result.status).toEqual(201)
-      expect(result.data.url).toContain('https://udagram-707863247739-dev.s3.amazonaws.com/test.jpg')
+      expect(result.data.url).toContain('https://udagram-')
     })
   })
 
@@ -184,10 +181,10 @@ describe('feed router', () => {
 
       const finalNumberOfItems = await FeedItem.count()
       const itemsWithCaption = await findAllWithCaption(caption)
-      // await teardownFeedItem();
+      await teardownFeedItem();
       expect(result.status).toEqual(201)
       expect(result.data.caption).toEqual(caption)
-      expect(result.data.url).toContain('https://udagram-707863247739-dev.s3.amazonaws.com/https%3A//happy.com')
+      expect(result.data.url).toContain('https://udagram-')
       expect(finalNumberOfItems).toEqual(initialNumberOfItems + 1)
       expect(itemsWithCaption.length).toEqual(1)
       expect(itemsWithCaption[0].caption).toEqual(caption)
