@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backendfeed
+  labels:
+    app: backend_feed
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend_feed
+  template:
+    metadata:
+      labels:
+        app: backend_feed
+    spec:
+      containers:
+        - name: udagram-api-feed
+          image: nchandlersmith/udagram-api-feed
