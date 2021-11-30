@@ -6,6 +6,6 @@ services:
 script:
   - docker --version
   - docker build -t udagram-api-feed .
-  - docker tag udagram-api-feed nchandlersmith/udagram-api-feed
+  - docker tag udagram-api-feed nchandlersmith/udagram-api-feed:v2
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker push nchandlersmith/udagram-api-feed
+  - docker push nchandlersmith/udagram-api-feed:v2
