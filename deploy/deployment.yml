@@ -23,3 +23,5 @@ spec:
                 name: udagram-api
             - secretRef:
                 name: udagram-secrets
+          ports:
+            - containerPort: 8080
