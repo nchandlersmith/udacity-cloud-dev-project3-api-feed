@@ -21,3 +21,5 @@ spec:
           envFrom:
             - configMapRef:
                 name: udagram-api
+            - secretRef:
+                name: udagram-secrets
