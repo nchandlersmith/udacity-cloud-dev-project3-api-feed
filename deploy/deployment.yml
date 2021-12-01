@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: udagram-api-feed
-          image: nchandlersmith/udagram-api-feed
+          image: nchandlersmith/udagram-api-feed:latest
           imagePullPolicy: Always
           envFrom:
             - configMapRef:
