@@ -5,7 +5,32 @@ services:
   - docker
 script:
   - docker --version
-  - docker build -t udagram-api-feed .
-  - docker tag udagram-api-feed nchandlersmith/udagram-api-feed:v2
+  # Define variables for image name building
+  - export DOCKER_REPO=nchandlersmith
+  - echo $DOCKER_REPO
+  - export IMAGE_NAME=udagram-api-feed
+  - echo $IMAGE_NAME
+  - export TIMESTAMP=$(date +'%Y%m%d-%H-%M-%S')
+  - echo $TIMESTAMP
+  - export VERSION=${TIMESTAMP}--${TRAVIS_COMMIT}
+  - echo $VERSION
+
+  # Build latest image name
+  - export LATEST_IMAGE="${DOCKER_REPO}/${IMAGE_NAME}:latest"
+  - echo $LATEST_IMAGE
+  # Build versioned image name
+  - export VERSIONED_IMAGE="${DOCKER_REPO}/${IMAGE_NAME}:${VERSION}"
+  - echo $VERSIONED_IMAGE
+
+  # Build image
+  - docker build -t $IMAGE_NAME .
+  # Tag latest
+  - docker tag $IMAGE_NAME $LATEST_IMAGE
+  # Tag version
+  - docker tag $IMAGE_NAME $VERSIONED_IMAGE
+
+  # Login to Docker Hub
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker push nchandlersmith/udagram-api-feed:v2
+  # Push all the things
+  - docker push $LATEST_IMAGE
+  - docker push $VERSIONED_IMAGE
