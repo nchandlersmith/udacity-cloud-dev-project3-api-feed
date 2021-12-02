@@ -15,7 +15,7 @@ spec:
         app: backend_feed
     spec:
       containers:
-        - name: udagram-api-feed
+        - name: feedapi
           image: nchandlersmith/udagram-api-feed:latest
           imagePullPolicy: Always
           envFrom:
