@@ -6,7 +6,8 @@ metadata:
     run: backendfeed
 spec:
   ports:
-    - port: 8080
+    - nodePort: 32634
+      port: 8080
       targetPort: 8080
   selector:
     run: udagram

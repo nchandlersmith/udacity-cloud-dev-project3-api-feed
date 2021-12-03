@@ -23,5 +23,7 @@ spec:
                 name: udagram-api
             - secretRef:
                 name: udagram-secrets
+            - secretRef:
+                name: udagram-aws-secrets
           ports:
             - containerPort: 8080
