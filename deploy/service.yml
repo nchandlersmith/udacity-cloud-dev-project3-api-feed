@@ -3,9 +3,10 @@ kind: Service
 metadata:
   name: backendfeed
   labels:
-    run: backend_feed
+    run: backendfeed
 spec:
   ports:
-    - targetPort: 8080
+    - port: 8080
+      targetPort: 8080
   selector:
-    run: backend_feed
+    run: udagram

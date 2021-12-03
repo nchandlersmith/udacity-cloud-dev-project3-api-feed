@@ -3,16 +3,16 @@ kind: Deployment
 metadata:
   name: backendfeed
   labels:
-    app: backend_feed
+    app: udagram
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: backend_feed
+      app: udagram
   template:
     metadata:
       labels:
-        app: backend_feed
+        app: udagram
     spec:
       containers:
         - name: feedapi
