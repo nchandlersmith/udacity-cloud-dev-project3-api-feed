@@ -12,7 +12,7 @@ script:
   - echo $IMAGE_NAME
   - export TIMESTAMP=$(date +'%Y%m%d-%H-%M-%S')
   - echo $TIMESTAMP
-  - export VERSION=${TIMESTAMP}--${TRAVIS_COMMIT}
+  - export VERSION=${TIMESTAMP}--${TRAVIS_COMMIT:0:5}
   - echo $VERSION
 
   # Build latest image name
