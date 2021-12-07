@@ -58,6 +58,10 @@ router.get('/signed-url/:fileName',
 router.post('/',
     requireAuth,
     async (req: Request, res: Response) => {
+      if (req.body === undefined) {
+        return res.status(500).send({message: 'Request body not found. Did someone leave out a body parser?'})
+      }
+
       const caption = req.body.caption;
       const fileName = req.body.url; // same as S3 key name
 
